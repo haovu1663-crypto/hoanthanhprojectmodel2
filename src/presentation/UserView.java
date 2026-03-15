@@ -10,7 +10,8 @@ public class UserView {
     public static void viewStart(){
         System.out.println("======== HỆ THỐNG QUẢN LÝ CỬA HÀNG ========");
         System.out.println("1. Đăng nhập Admin");
-        System.out.println("2. Thoát");
+        System.out.println("2. Đănkyskys tài khoản");
+        System.out.println("3. Thoát");
         System.out.println("===========================================");
         System.out.print("Nhập lựa chọn: ");
 
@@ -121,5 +122,33 @@ public class UserView {
         System.out.println("==================================");
         System.out.print("Nhập lựa chọn của bạn: ");
 
+    }
+    public static String nhapVaKiemTraSdt(Scanner scanner) {
+        String sdt;
+        // Regex: Bắt đầu bằng 0, theo sau là 9 chữ số
+        String regex = "^0[0-9]{9}$";
+
+        while (true) {
+            sdt = scanner.nextLine().trim();
+            if (sdt.matches(regex)) {
+                return "Số điện thoại hợp lệ: " + sdt;
+            } else {
+                System.out.println(RED+"Vui lòng nhập đúng định dạng "+RESET);
+                System.out.println("Nhập SDT : ");
+            }
+        }
+    }
+    public static String nhapVaKiemTraEmail(Scanner scanner) {
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        while (true) {
+            String email = scanner.nextLine().trim();
+            if (email.matches(emailRegex)) {
+
+                return email;
+            } else {
+                System.out.println(RED+" Lỗi: Email không đúng định dạng. Vui lòng thử lại!"+RESET);
+                System.out.println("Nhập Email : ");
+            }
+        }
     }
 }

@@ -201,12 +201,14 @@ public class Main {
 
                 }
                 break;
+                case 2 :{
+                    // đăng ký tài khoản
+                }
 
 
 
 
-
-                case 2 :
+                case 3 :
                    return;
 
                    default:

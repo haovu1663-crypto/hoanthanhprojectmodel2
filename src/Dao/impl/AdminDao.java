@@ -36,9 +36,23 @@ public class AdminDao implements IAdminDao {
 
     }
 
-    public static void main(String[] args) {
-     IAdminDao adminDao = new AdminDao();
-       Admin a = adminDao.findAdminByUsername("vuhao");
-        System.out.println(a.getUsername());
+    @Override
+    public void addAdmin(Admin admin) {
+//        String sql = "INSERT INTO quanlysanpham.admin (name, phone, email, address) VALUES (?, ?, ?, ?)";
+//        try (Connection conn = getConnection();
+//             PreparedStatement pstm = conn.prepareStatement(sql)) {
+//
+//            pstm.setString(1, customer.getName());
+//            pstm.setString(2, customer.getPhone());
+//            pstm.setString(3, customer.getEmail());
+//            pstm.setString(4, customer.getAddress());
+//
+//            pstm.executeUpdate();
+//            System.out.println("Thêm thành công: " + customer.getName());
+//
+//        } catch (SQLException e) {
+//            System.err.println("Lỗi thêm customer: " + e.getMessage());
+//            throw new RuntimeException(e);
+//        }
     }
 }
