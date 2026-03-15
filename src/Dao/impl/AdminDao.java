@@ -38,21 +38,20 @@ public class AdminDao implements IAdminDao {
 
     @Override
     public void addAdmin(Admin admin) {
-//        String sql = "INSERT INTO quanlysanpham.admin (name, phone, email, address) VALUES (?, ?, ?, ?)";
-//        try (Connection conn = getConnection();
-//             PreparedStatement pstm = conn.prepareStatement(sql)) {
-//
-//            pstm.setString(1, customer.getName());
-//            pstm.setString(2, customer.getPhone());
-//            pstm.setString(3, customer.getEmail());
-//            pstm.setString(4, customer.getAddress());
-//
-//            pstm.executeUpdate();
-//            System.out.println("Thêm thành công: " + customer.getName());
-//
-//        } catch (SQLException e) {
-//            System.err.println("Lỗi thêm customer: " + e.getMessage());
-//            throw new RuntimeException(e);
-//        }
+        String sql = "INSERT INTO quanlysanpham.admin (username,password) VALUES (?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement pstm = conn.prepareStatement(sql)) {
+
+            pstm.setString(1, admin.getUsername());
+            pstm.setString(2, admin.getPassword());
+
+
+            pstm.executeUpdate();
+            System.out.println("Thêm thành công tài khoản : " + admin.getUsername());
+
+        } catch (SQLException e) {
+            System.err.println("Lỗi thêm customer: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

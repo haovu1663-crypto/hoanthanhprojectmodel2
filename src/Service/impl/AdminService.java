@@ -14,4 +14,11 @@ public class AdminService implements IadminService {
         }
         else return null;
     }
+
+    @Override
+    public void addAdmin(Admin admin) {
+        adminDao.addAdmin(admin);
+    }
+
+
 }

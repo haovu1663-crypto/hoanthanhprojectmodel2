@@ -203,7 +203,8 @@ public class Main {
                 break;
                 case 2 :{
                     // đăng ký tài khoản
-                }
+                    Adminview.addAdmin(sc);
+                }break;
 
 
 

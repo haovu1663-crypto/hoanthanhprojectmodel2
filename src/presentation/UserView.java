@@ -123,7 +123,7 @@ public class UserView {
         System.out.print("Nhập lựa chọn của bạn: ");
 
     }
-    public static String nhapVaKiemTraSdt(Scanner scanner) {
+    public static String checkSDT(Scanner scanner) {
         String sdt;
         // Regex: Bắt đầu bằng 0, theo sau là 9 chữ số
         String regex = "^0[0-9]{9}$";
@@ -138,7 +138,7 @@ public class UserView {
             }
         }
     }
-    public static String nhapVaKiemTraEmail(Scanner scanner) {
+    public static String CheckEmail(Scanner scanner) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         while (true) {
             String email = scanner.nextLine().trim();

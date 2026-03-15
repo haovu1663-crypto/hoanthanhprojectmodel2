@@ -59,32 +59,33 @@ public class ProductDao implements IProductDao {
 
     }
 
+
     @Override
     public void showAllProducts() {
-        String sql = "SELECT * FROM quanlysanpham.product ";
+        String sql = "SELECT * FROM quanlysanpham.product";
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            try (ResultSet rs = pstmt.executeQuery()) {
-                System.out.println("\n==============================Danh sách==============================");
-                System.out.printf("%-5s %-25s %-20s %-20s %-20s \n", "ID", "Name", "Brand","Price","Stock");
-                System.out.println("-".repeat(80));
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            System.out.println("\n" + "=".repeat(86));
+            System.out.printf("| %-5s | %-25s | %-15s | %-15s | %-10s |\n",
+                    "ID", "Product Name", "Brand", "Price", "Stock");
+            System.out.println("-".repeat(86));
 
-                while (rs.next()) {
-                    int id = rs.getInt(1);
-                    String name = rs.getString(2);
-                    String Brand = rs.getString(3);
-                    double pric =rs.getDouble(4);
-                    int stock = rs.getInt(5);
-
-                    System.out.printf("%-5d %-25s %-20s %-20s %-20s \n", id, name, Brand, pric, stock);
-                }
-                System.out.println("-".repeat(80));
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                String brand = rs.getString(3);
+                double price = rs.getDouble(4);
+                int stock = rs.getInt(5);
+                System.out.printf("| %-5d | %-25s | %-15s | %-15.2f | %-10d |\n",
+                        id, name, brand, price, stock);
             }
+
+            System.out.println("=".repeat(86));
         } catch (SQLException e) {
             System.err.println("Lỗi đọc dữ liệu: " + e.getMessage());
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -237,23 +238,27 @@ public class ProductDao implements IProductDao {
         return products;
     }
 
-    public static  void showProductIdAndName() {
+    public static void showProductIdAndName() {
         String sql = "SELECT id, name FROM quanlysanpham.product";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
 
-            System.out.println("\n========= Danh sách sản phẩm (ID & Name) =========");
-            System.out.printf("%-5s %-25s \n", "ID", "Name");
+            // Tổng cộng 40 dấu "=" để bảng cân đối
+            System.out.println("\n" + "=".repeat(40));
+            System.out.printf("| %-5s | %-28s |\n", "ID", "Product Name");
             System.out.println("-".repeat(40));
 
             while (rs.next()) {
-                int id = rs.getInt("id");       // lấy theo tên cột
+                int id = rs.getInt("id");
                 String name = rs.getString("name");
-                System.out.printf("%-5d %-25s \n", id, name);
+
+                // Căn chỉnh nội dung chuẩn theo khung
+                System.out.printf("| %-5d | %-28s |\n", id, name);
             }
 
-            System.out.println("-".repeat(40));
+            System.out.println("=".repeat(40));
+
         } catch (SQLException e) {
             System.err.println("Lỗi đọc dữ liệu: " + e.getMessage());
             throw new RuntimeException(e);

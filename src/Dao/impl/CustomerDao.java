@@ -60,11 +60,11 @@ public class CustomerDao implements ICustomerDao {
         String sql = "SELECT * FROM quanlysanpham.customer";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             try (ResultSet rs = pstmt.executeQuery()) {
-                System.out.println("\n==============================Danh sách Khách Hàng==============================");
-                System.out.printf("%-5s %-25s %-15s %-30s %-30s\n", "ID", "Name", "Phone", "Email", "Address");
-                System.out.println("-".repeat(105));
+                System.out.println("\n" + "=".repeat(106));
+                System.out.printf("| %-5s | %-20s | %-12s | %-28s | %-25s |\n",
+                        "ID", "Customer Name", "Phone", "Email", "Address");
+                System.out.println("-".repeat(106));
 
                 while (rs.next()) {
                     int id = rs.getInt("id");
@@ -72,9 +72,11 @@ public class CustomerDao implements ICustomerDao {
                     String phone = rs.getString("phone");
                     String email = rs.getString("email");
                     String address = rs.getString("address");
-                    System.out.printf("%-5d %-25s %-15s %-30s %-30s\n", id, name, phone, email, address);
+
+                    System.out.printf("| %-5d | %-20s | %-12s | %-28s | %-25s |\n",
+                            id, name, phone, email, address);
                 }
-                System.out.println("-".repeat(105));
+                System.out.println("=".repeat(106));
             }
         } catch (SQLException e) {
             System.err.println("Lỗi đọc dữ liệu: " + e.getMessage());

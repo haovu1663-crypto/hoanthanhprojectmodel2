@@ -12,14 +12,12 @@ public class CustomerView {
     private static ICustomerDao iCustomerDao = new CustomerDao();
     public static void addCustomer(Scanner scanner) {
         System.out.println("========== Thêm Khách Hàng ==========");
-
         System.out.print("Nhập tên khách hàng: ");
         String name = scanner.nextLine();
-
         System.out.print("Nhập số điện thoại: ");
         String phone = scanner.nextLine();
 
-        // Kiểm tra email unique
+        // Kiểm tra email
         System.out.print("Nhập email: ");
         String email = scanner.nextLine();
         while (true) {
@@ -31,10 +29,8 @@ public class CustomerView {
                 break;
             }
         }
-
         System.out.print("Nhập địa chỉ: ");
         String address = scanner.nextLine();
-
         Customer c = new Customer(name, phone, email, address);
         iCustomerService.addCustomer(c);
     }
@@ -42,77 +38,72 @@ public class CustomerView {
         iCustomerService.showAllCustomers();
     }
     public static void updateCustomer(Scanner scanner) {
-        System.out.println("========== Cập Nhật Khách Hàng ==========");
+        System.out.println("\n========== CẬP NHẬT KHÁCH HÀNG ==========");
         System.out.print("Nhập ID khách hàng: ");
         int id = UserView.checkNumeric(scanner);
 
+        Customer c;
         while (true) {
-            Customer customer = iCustomerDao.findCustomerById(id);
-            if (customer == null) {
-                System.out.println("ID không tồn tại, vui lòng nhập lại: ");
+            c = iCustomerDao.findCustomerById(id);
+            if (c == null) {
+                System.out.print("ID không tồn tại, vui lòng nhập lại: ");
                 id = UserView.checkNumeric(scanner);
             } else {
                 break;
             }
         }
-
-        Customer c = iCustomerDao.findCustomerById(id);
-        System.out.println("\n===========================Khách Hàng Cần Cập Nhật===========================");
-        System.out.printf("%-5s %-25s %-15s %-30s %-30s\n", "ID", "Name", "Phone", "Email", "Address");
-        System.out.println("-".repeat(105));
-        System.out.printf("%-5d %-25s %-15s %-30s %-30s\n", c.getId(), c.getName(), c.getPhone(), c.getEmail(), c.getAddress());
-        System.out.println("-".repeat(105));
-
-        System.out.print("Nhập tên mới: ");
+        System.out.println("\n" + "=".repeat(106));
+        System.out.printf("| %-5s | %-20s | %-12s | %-26s | %-25s |\n", "ID", "Name", "Phone", "Email", "Address");
+        System.out.println("-".repeat(106));
+        System.out.printf("| %-5d | %-20s | %-12s | %-26s | %-25s |\n", c.getId(), c.getName(), c.getPhone(), c.getEmail(), c.getAddress());
+        System.out.println("=".repeat(106));
+        System.out.print("\nNhập tên mới: ");
         String name = scanner.nextLine();
-
         System.out.print("Nhập số điện thoại mới: ");
         String phone = scanner.nextLine();
-
         System.out.print("Nhập email mới: ");
         String email = scanner.nextLine();
         while (true) {
             Customer existing = iCustomerDao.findCustomerByEmail(email);
             if (existing != null && existing.getId() != id) {
-                System.out.println("Email này đã tồn tại, vui lòng nhập lại: ");
+                System.out.print("Email này đã tồn tại, vui lòng nhập lại: ");
                 email = scanner.nextLine();
             } else {
                 break;
             }
         }
-
         System.out.print("Nhập địa chỉ mới: ");
         String address = scanner.nextLine();
-
         Customer updated = new Customer(id, name, phone, email, address);
         iCustomerService.updateCustomer(updated);
+        System.out.println("=> Cập nhật khách hàng thành công!");
     }
     public static void deleteCustomer(Scanner scanner) {
-        System.out.println("========== Xóa Khách Hàng ==========");
+        System.out.println("\n========== XÓA KHÁCH HÀNG ==========");
         System.out.print("Nhập ID khách hàng: ");
         int id = UserView.checkNumeric(scanner);
-
+        Customer c;
         while (true) {
-            Customer customer = iCustomerDao.findCustomerById(id);
-            if (customer == null) {
-                System.out.println("ID không tồn tại, vui lòng nhập lại: ");
+            c = iCustomerDao.findCustomerById(id);
+            if (c == null) {
+                System.out.print("ID không tồn tại, vui lòng nhập lại: ");
                 id = UserView.checkNumeric(scanner);
             } else {
                 break;
             }
         }
-
-        Customer c = iCustomerDao.findCustomerById(id);
-        System.out.println("\n===========================Khách Hàng Cần Xóa===========================");
-        System.out.printf("%-5s %-25s %-15s %-30s %-30s\n", "ID", "Name", "Phone", "Email", "Address");
-        System.out.println("-".repeat(105));
-        System.out.printf("%-5d %-25s %-15s %-30s %-30s\n", c.getId(), c.getName(), c.getPhone(), c.getEmail(), c.getAddress());
-        System.out.println("-".repeat(105));
-
-        System.out.println("Bạn có muốn xóa không? (1 = yes / 0 = no)");
+        System.out.println("\n" + "=".repeat(106));
+        System.out.printf("| %-5s | %-20s | %-12s | %-26s | %-25s |\n", "ID", "Name", "Phone", "Email", "Address");
+        System.out.println("-".repeat(106));
+        System.out.printf("| %-5d | %-20s | %-12s | %-26s | %-25s |\n", c.getId(), c.getName(), c.getPhone(), c.getEmail(), c.getAddress());
+        System.out.println("=".repeat(106));
+        System.out.print("Bạn có muốn xóa không? (1 = yes / 0 = no): ");
         int confirm = UserView.checkNumeric(scanner);
         if (confirm == 1) {
             iCustomerService.deleteCustomer(id);
+            System.out.println("=> Đã xóa khách hàng thành công!");
+        } else {
+            System.out.println("=> Đã hủy thao tác xóa.");
         }
     }
 
