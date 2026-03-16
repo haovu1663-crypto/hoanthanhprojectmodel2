@@ -37,32 +37,33 @@ public class IvoiceDao implements IinvoiceDao {
 
     @Override
     public void showAllInvoices() {
-        String sql = "SELECT i.id AS invoice_id,\n" +
-                "       p.name AS product_name,\n" +
-                "       i.created_at,\n" +
-                "       i.total_amount\n" +
+        String sql = "SELECT DISTINCT i.id AS invoice_id,\n" +
+                "                c.name AS customer_name,\n" +
+                "                i.created_at,\n" +
+                "                i.total_amount\n" +
                 "FROM quanlysanpham.invoice i\n" +
-                "JOIN quanlysanpham.invoice_details d \n" +
-                "       ON i.id = d.invoice_id\n" +
-                "JOIN quanlysanpham.product p \n" +
-                "       ON d.product_id = p.id;\n ";
+                "         JOIN quanlysanpham.customer c\n" +
+                "              ON i.customer_id = c.id\n" +
+                "         JOIN quanlysanpham.invoice_details d\n" +
+                "              ON i.id = d.invoice_id;";
+
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             try (ResultSet rs = pstmt.executeQuery()) {
-                System.out.println("\n==============================Danh sách==============================");
-                System.out.printf("%-5s %-25s %-20s %-20s  \n", "ID", "Customer name", "Create at","Total Amount ");
-                System.out.println("-".repeat(80));
+
+                System.out.println("\n" + "=".repeat(72));
+                System.out.printf("| %-5s | %-25s | %-15s | %-15s | \n", "ID", "Customer Name", "Created At", "Total Amount");
+                System.out.println("-".repeat(72));
 
                 while (rs.next()) {
                     int id = rs.getInt(1);
                     String name = rs.getString(2);
                     java.time.LocalDate datee = rs.getDate(3).toLocalDate();
-                    double pric =rs.getDouble(4);
+                    double total = rs.getDouble(4);
 
-
-                    System.out.printf("%-5d %-25s %-20s %-20s  \n", id, name, datee.toString(), pric);
+                    System.out.printf("| %-5d | %-25s | %-15s | %-15.2f | \n", id, name, datee.toString(), total);
                 }
-                System.out.println("-".repeat(80));
+                System.out.println("=".repeat(72));
             }
         } catch (SQLException e) {
             System.err.println("Lỗi đọc dữ liệu: " + e.getMessage());
@@ -72,77 +73,91 @@ public class IvoiceDao implements IinvoiceDao {
 
     @Override
     public void findbynam(String name) {
-        String sql = "SELECT \n" +
-                "    i.id AS invoice_id, \n" +
-                "    c.name AS customer_name, \n" +
-                "    i.created_at, \n" +
-                "    i.total_amount\n" +
+        String sql = "SELECT i.id AS invoice_id,\n" +
+                "       c.name AS customer_name,\n" +
+                "       p.name AS product_name,\n" +
+                "       i.created_at,\n" +
+                "       d.quantity,\n" +
+                "       (d.quantity * p.price) AS total_line_amount\n" +
                 "FROM quanlysanpham.invoice i\n" +
-                "JOIN quanlysanpham.customer c ON i.customer_id = c.id\n" +
-                "WHERE c.name = ?;";
+                "JOIN quanlysanpham.customer c \n" +
+                "       ON i.customer_id = c.id\n" +
+                "JOIN quanlysanpham.invoice_details d \n" +
+                "       ON i.id = d.invoice_id\n" +
+                "JOIN quanlysanpham.product p \n" +
+                "       ON d.product_id = p.id\n" +
+                "WHERE c.name = ?;\n";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setString(1, name);
-            System.out.println("\n==============================Danh sách==============================");
-            System.out.printf("%-5s %-25s %-20s %-20s  \n", "ID", "Customer name", "Create at","Total Amount ");
-            System.out.println("-".repeat(80));
+            System.out.println("\n" + "=".repeat(109));
+            System.out.printf("| %-5s | %-20s | %-25s | %-15s | %-10s | %-15s |\n",
+                    "ID", "Customer Name", "Product Name", "Created At", "Quantity", "Total Amount");
+            System.out.println("-".repeat(109));
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt(1);
-                    String namen = rs.getString(2);
-                    java.time.LocalDate datee = rs.getDate(3).toLocalDate();
-                    double pric =rs.getDouble(4);
-                    System.out.printf("%-5d %-25s %-20s %-20s  \n", id, namen, datee.toString(), pric);
-                }  ;
+                    String customerName = rs.getString(2);
+                    String productName = rs.getString(3);
+                    java.time.LocalDate datee = rs.getDate(4).toLocalDate();
+                    int quantity = rs.getInt(5);
+                    double totalLine = rs.getDouble(6);
+                    System.out.printf("| %-5d | %-20s | %-25s | %-15s | %-10d | %-15.2f |\n",
+                            id, customerName, productName, datee.toString(), quantity, totalLine);
+                }
+                System.out.println("=".repeat(109));
             }
         } catch (SQLException e) {
             System.err.println("Lỗi đọc dữ liệu: " + e.getMessage());
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public void findbydate(LocalDate date) {
-        String sql = "SELECT " +
-                "    i.id AS invoice_id, " +
-                "    c.name AS customer_name, " +
-                "    i.created_at, " +
-                "    i.total_amount " +
-                "FROM quanlysanpham.invoice i " +
-                "JOIN quanlysanpham.customer c ON i.customer_id = c.id " +
-                "WHERE i.created_at::date = ?;"; // Sử dụng ::date để so sánh ngày
+        String sql = "SELECT i.id AS invoice_id,\n" +
+                "       c.name AS customer_name,\n" +
+                "       p.name AS product_name,\n" +
+                "       i.created_at,\n" +
+                "       d.quantity,\n" +
+                "       (d.quantity * p.price) AS total_line_amount\n" +
+                "FROM quanlysanpham.invoice i\n" +
+                "JOIN quanlysanpham.customer c \n" +
+                "       ON i.customer_id = c.id\n" +
+                "JOIN quanlysanpham.invoice_details d \n" +
+                "       ON i.id = d.invoice_id\n" +
+                "JOIN quanlysanpham.product p \n" +
+                "       ON d.product_id = p.id\n" +
+                "WHERE i.created_at::date = ?;";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Truyền trực tiếp LocalDate vào (JDBC 4.2+ hỗ trợ rất tốt)
             pstmt.setObject(1, date);
 
-            System.out.println("\n============================== DANH SÁCH HÓA ĐƠN NGÀY " + date + " ==============================");
-            System.out.printf("%-5s %-25s %-20s %-20s\n", "ID", "Customer name", "Created at", "Total Amount");
-            System.out.println("-".repeat(85));
-
             try (ResultSet rs = pstmt.executeQuery()) {
-                boolean hasData = false;
+                System.out.println("\n" + "=".repeat(109));
+                System.out.printf("| %-5s | %-20s | %-25s | %-15s | %-10s | %-15s |\n",
+                        "ID", "Customer Name", "Product Name", "Created At", "Quantity", "Total Amount");
+                System.out.println("-".repeat(109));
 
+                boolean hasData = false;
                 while (rs.next()) {
                     hasData = true;
-                    int id = rs.getInt("invoice_id");
-                    String customerName = rs.getString("customer_name");
-
-
-                    java.time.LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
-                    double total = rs.getDouble("total_amount");
-
-                    System.out.printf("%-5d %-25s %-20s %-20.2f\n",
-                            id, customerName, createdAt.toLocalDate().toString(), total);
+                    int id = rs.getInt(1);
+                    String customerName = rs.getString(2);
+                    String productName = rs.getString(3);
+                    java.time.LocalDate datee = rs.getDate(4).toLocalDate();
+                    int quantity = rs.getInt(5);
+                    double totalLine = rs.getDouble(6);
+                    System.out.printf("| %-5d | %-20s | %-25s | %-15s | %-10d | %-15.2f |\n",
+                            id, customerName, productName, datee.toString(), quantity, totalLine);
                 }
 
                 if (!hasData) {
-                    System.out.println("Không có hóa đơn nào trong ngày này.");
+                    System.out.println("| " + String.format("%-82s", "Không có hóa đơn nào trong ngày này.") + " |");
                 }
+                System.out.println("=".repeat(109));
             }
         } catch (SQLException e) {
             System.err.println("Lỗi đọc dữ liệu: " + e.getMessage());
@@ -161,18 +176,19 @@ public class IvoiceDao implements IinvoiceDao {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-
-            System.out.println("\n========== BÁO CÁO DOANH THU THEO NGÀY ==========");
-            System.out.printf("%-15s %-20s\n", "Ngày", "Tổng doanh thu");
-            System.out.println("-".repeat(40));
+            System.out.println("\n" + "=".repeat(42));
+            System.out.printf("| %-15s | %-20s |\n", "Ngày", "Tổng doanh thu");
+            System.out.println("-".repeat(42));
 
             while (rs.next()) {
                 LocalDate date = rs.getDate("order_date").toLocalDate();
                 String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
                 double total = rs.getDouble("daily_total");
 
-                System.out.printf("%-15s %-20.2f\n", formattedDate, total);
+                System.out.printf("| %-15s | %-20.2f |\n", formattedDate, total);
             }
+            System.out.println("=".repeat(42));
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -190,18 +206,19 @@ public class IvoiceDao implements IinvoiceDao {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-
-            System.out.println("\n========== BÁO CÁO DOANH THU THEO THÁNG ==========");
-            System.out.printf("%-15s %-20s %-20s\n", "Tháng/Năm", "Số lượng HĐ", "Tổng doanh thu");
-            System.out.println("-".repeat(60));
+            System.out.println("\n" + "=".repeat(63));
+            System.out.printf("| %-15s | %-18s | %-20s |\n", "Tháng/Năm", "Số lượng HĐ", "Tổng doanh thu");
+            System.out.println("-".repeat(63));
 
             while (rs.next()) {
                 String month = rs.getString("month_period");
                 int count = rs.getInt("total_invoices");
                 double total = rs.getDouble("monthly_revenue");
 
-                System.out.printf("%-15s %-20d %-20.2f\n", month, count, total);
+                System.out.printf("| %-15s | %-18d | %-20.2f |\n", month, count, total);
             }
+            System.out.println("=".repeat(63));
+
         } catch (SQLException e) {
             System.err.println("Lỗi thống kê: " + e.getMessage());
         }
@@ -215,23 +232,20 @@ public class IvoiceDao implements IinvoiceDao {
                 "FROM quanlysanpham.invoice " +
                 "GROUP BY order_year " +
                 "ORDER BY order_year DESC;";
-
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-
-            System.out.println("\n========== BẢNG THỐNG KÊ DOANH THU THEO NĂM ==========");
-            System.out.printf("%-10s %-15s %-20s\n", "Năm", "Số lượng HĐ", "Tổng doanh thu");
-            System.out.println("-".repeat(50));
-
+            System.out.println("\n" + "=".repeat(57));
+            System.out.printf("| %-10s | %-15s | %-22s |\n", "Năm", "Số lượng HĐ", "Tổng doanh thu");
+            System.out.println("-".repeat(57));
             while (rs.next()) {
                 int year = rs.getInt("order_year");
                 int count = rs.getInt("total_invoices");
                 double total = rs.getDouble("yearly_revenue");
 
-                System.out.printf("%-10d %-15d %-20.2f\n", year, count, total);
+                System.out.printf("| %-10d | %-15d | %-22.2f |\n", year, count, total);
             }
-            System.out.println("-".repeat(50));
+            System.out.println("=".repeat(57));
 
         } catch (SQLException e) {
             System.err.println("Lỗi khi thống kê theo năm: " + e.getMessage());

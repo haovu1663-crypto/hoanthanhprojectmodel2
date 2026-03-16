@@ -62,7 +62,7 @@ public class ProductDao implements IProductDao {
 
     @Override
     public void showAllProducts() {
-        String sql = "SELECT * FROM quanlysanpham.product";
+        String sql = "SELECT * FROM quanlysanpham.product order by id ASC ";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {

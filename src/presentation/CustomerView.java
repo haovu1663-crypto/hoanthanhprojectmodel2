@@ -15,16 +15,15 @@ public class CustomerView {
         System.out.print("Nhập tên khách hàng: ");
         String name = scanner.nextLine();
         System.out.print("Nhập số điện thoại: ");
-        String phone = scanner.nextLine();
-
+        String phone = UserView.checkSDT(scanner);
         // Kiểm tra email
         System.out.print("Nhập email: ");
-        String email = scanner.nextLine();
+        String email = UserView.CheckEmail(scanner);
         while (true) {
             Customer existing = iCustomerDao.findCustomerByEmail(email);
             if (existing != null) {
                 System.out.println("Email này đã tồn tại, vui lòng nhập lại: ");
-                email = scanner.nextLine();
+                email = UserView.CheckEmail(scanner);
             } else {
                 break;
             }
@@ -60,14 +59,14 @@ public class CustomerView {
         System.out.print("\nNhập tên mới: ");
         String name = scanner.nextLine();
         System.out.print("Nhập số điện thoại mới: ");
-        String phone = scanner.nextLine();
+        String phone =UserView.checkSDT(scanner);
         System.out.print("Nhập email mới: ");
-        String email = scanner.nextLine();
+        String email =UserView.CheckEmail(scanner);
         while (true) {
             Customer existing = iCustomerDao.findCustomerByEmail(email);
             if (existing != null && existing.getId() != id) {
                 System.out.print("Email này đã tồn tại, vui lòng nhập lại: ");
-                email = scanner.nextLine();
+                email =UserView.CheckEmail(scanner);
             } else {
                 break;
             }

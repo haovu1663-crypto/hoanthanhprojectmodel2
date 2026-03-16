@@ -64,6 +64,8 @@ public class Main {
                                             }
 
                                         }break;
+                                        default:
+                                            System.out.println(UserView.RED+"ko có lựa chọn này,vui lòng chọn lại"+UserView.RESET);
                                     }
                                     if(check2){break;}
                                 }
@@ -97,14 +99,14 @@ public class Main {
                                             if(a==1){
                                                 check2 = true;
                                             }
-                                        }
+                                        }break;
                                     }
                                     if(check2){break;}
                                 }
 
 
                             }
-                           // break;
+                            break;
                             case 3: {
                                 // quản lý hoa đơn
                                 while(true){
@@ -144,7 +146,7 @@ public class Main {
                                             if(a==1){
                                                 check3 = true;
                                             }
-                                        }
+                                        }break;
                                     }
                                     if(check3){break;}
                                 }
@@ -178,7 +180,7 @@ public class Main {
                                                 check4 = true;
                                             }
                                             // thoát
-                                        }
+                                        }break;
                                     }
                                     if(check4){break;}
                                 }
@@ -191,7 +193,7 @@ public class Main {
                                 if(t==1){
                                 check=true;
                                 }
-                            }
+                            }break;
                         }
                         if(check){
                             break;

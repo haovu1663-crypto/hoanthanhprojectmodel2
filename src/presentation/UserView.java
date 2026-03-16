@@ -10,7 +10,7 @@ public class UserView {
     public static void viewStart(){
         System.out.println("======== HỆ THỐNG QUẢN LÝ CỬA HÀNG ========");
         System.out.println("1. Đăng nhập Admin");
-        System.out.println("2. Đănkyskys tài khoản");
+        System.out.println("2. Đăng ký tài khoản");
         System.out.println("3. Thoát");
         System.out.println("===========================================");
         System.out.print("Nhập lựa chọn: ");
@@ -125,13 +125,12 @@ public class UserView {
     }
     public static String checkSDT(Scanner scanner) {
         String sdt;
-        // Regex: Bắt đầu bằng 0, theo sau là 9 chữ số
         String regex = "^0[0-9]{9}$";
 
         while (true) {
             sdt = scanner.nextLine().trim();
             if (sdt.matches(regex)) {
-                return "Số điện thoại hợp lệ: " + sdt;
+                return  sdt;
             } else {
                 System.out.println(RED+"Vui lòng nhập đúng định dạng "+RESET);
                 System.out.println("Nhập SDT : ");

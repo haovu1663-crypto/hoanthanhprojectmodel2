@@ -33,7 +33,7 @@ public class ProductView {
         System.out.print("Nhập Price : ");
         double price = UserView.checkPrice(scanner);
         System.out.print("Nhập Stock : ");
-        int stock =UserView.checkNumeric(scanner);
+        int stock =UserView.checkPrice(scanner);
         Product p = new Product(name,brand,price,stock);
         iProductService.addProduct(p);
 
@@ -169,7 +169,7 @@ public class ProductView {
     public static void findProductByStoc(Scanner scanner) {
         System.out.println("\n========== TÌM KIẾM THEO TỒN KHO ==========");
         System.out.print("Nhập số lượng tồn kho cần tìm: ");
-        int stock = Integer.parseInt(scanner.nextLine());
+        int stock = UserView.checkPrice(scanner);
         ArrayList<Product> products = iProductService.showProductbystock(stock);
         if (!products.isEmpty()) {
             System.out.println("\n" + "=".repeat(86));

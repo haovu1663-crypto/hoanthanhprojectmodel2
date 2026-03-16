@@ -57,7 +57,7 @@ public class CustomerDao implements ICustomerDao {
 
     @Override
     public void showAllCustomers() {
-        String sql = "SELECT * FROM quanlysanpham.customer";
+        String sql = "SELECT * FROM quanlysanpham.customer order by id ASC";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             try (ResultSet rs = pstmt.executeQuery()) {
