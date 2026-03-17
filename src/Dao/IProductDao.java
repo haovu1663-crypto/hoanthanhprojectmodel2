@@ -3,6 +3,7 @@ package Dao;
 import Model.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IProductDao {
     public void addProduct(Product product);
@@ -10,8 +11,8 @@ public interface IProductDao {
      void showAllProducts();
      void updateProduct(Product product);
      Product findProductById(int id);
-     ArrayList<Product>findProductsbyBrand(String brand);
+     List<Product>findProductsbyBrand(String brand);
      void deleteProduct(int id);
-    ArrayList<Product>findProductsbyPrice(double price);
-    ArrayList<Product>findProductsbyStock(int stock);
+    List<Product>findProductsbyPrice(double price);
+    List<Product> findProductsbyStock(int stock);
 }

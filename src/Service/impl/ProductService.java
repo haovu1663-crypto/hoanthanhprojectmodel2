@@ -6,6 +6,7 @@ import Model.Product;
 import Service.IProductService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductService implements IProductService {
     IProductDao productDao = new ProductDao();
@@ -25,8 +26,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public ArrayList<Product> showProductbyBrand(String brand) {
-        ArrayList<Product> products =productDao.findProductsbyBrand(brand) ;
+    public List<Product> showProductbyBrand(String brand) {
+        List<Product> products =productDao.findProductsbyBrand(brand) ;
         return products;
     }
 
@@ -36,14 +37,14 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public ArrayList<Product> showProductbyPrice(double price) {
-        ArrayList<Product> products =productDao.findProductsbyPrice(price) ;
+    public List<Product> showProductbyPrice(double price) {
+        List<Product> products =productDao.findProductsbyPrice(price) ;
         return products;
     }
 
     @Override
-    public ArrayList<Product> showProductbystock(int stock) {
-        ArrayList<Product> products =productDao.findProductsbyStock(stock) ;
+    public List<Product> showProductbystock(int stock) {
+        List<Product> products =productDao.findProductsbyStock(stock) ;
         return products;
     }
 }

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static utils.DBUtil.getConnection;
 
@@ -134,8 +135,8 @@ public class ProductDao implements IProductDao {
     }
 
     @Override
-    public ArrayList<Product> findProductsbyBrand(String brand) {
-        ArrayList<Product> products = new ArrayList<>();
+    public List<Product> findProductsbyBrand(String brand) {
+        List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM quanlysanpham.product WHERE brand ILIKE ?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -179,8 +180,8 @@ public class ProductDao implements IProductDao {
     }
 
     @Override
-    public ArrayList<Product> findProductsbyPrice(double price) {
-        ArrayList<Product> products = new ArrayList<>();
+    public List<Product> findProductsbyPrice(double price) {
+        List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM quanlysanpham.product WHERE price >= ? and price <= ? ";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -209,8 +210,8 @@ public class ProductDao implements IProductDao {
     }
 
     @Override
-    public ArrayList<Product> findProductsbyStock(int stoc) {
-        ArrayList<Product> products = new ArrayList<>();
+    public List<Product> findProductsbyStock(int stoc) {
+        List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM quanlysanpham.product WHERE stock=?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

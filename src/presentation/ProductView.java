@@ -8,6 +8,7 @@ import Service.impl.ProductService;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ProductView {
@@ -94,7 +95,7 @@ public class ProductView {
         System.out.print("Nhập Brand cần tìm: ");
         String brand = scanner.nextLine();
 
-        ArrayList<Product> products = iProductService.showProductbyBrand(brand);
+        List<Product> products = iProductService.showProductbyBrand(brand);
 
         if (!products.isEmpty()) {
             System.out.println("\n" + "=".repeat(86));
@@ -150,7 +151,7 @@ public class ProductView {
         System.out.println("\n========== TÌM KIẾM THEO GIÁ ==========");
         System.out.print("Nhập mức giá cần tìm: ");
         double price = Double.parseDouble(scanner.nextLine());
-        ArrayList<Product> products = iProductService.showProductbyPrice(price);
+        List<Product> products = iProductService.showProductbyPrice(price);
         if (!products.isEmpty()) {
             System.out.println("\n" + "=".repeat(86));
             System.out.printf("| %-5s | %-25s | %-15s | %-15s | %-10s |\n",
@@ -170,7 +171,7 @@ public class ProductView {
         System.out.println("\n========== TÌM KIẾM THEO TỒN KHO ==========");
         System.out.print("Nhập số lượng tồn kho cần tìm: ");
         int stock = UserView.checkPrice(scanner);
-        ArrayList<Product> products = iProductService.showProductbystock(stock);
+        List<Product> products = iProductService.showProductbystock(stock);
         if (!products.isEmpty()) {
             System.out.println("\n" + "=".repeat(86));
             System.out.printf("| %-5s | %-25s | %-15s | %-15s | %-10s |\n",

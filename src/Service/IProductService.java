@@ -3,13 +3,14 @@ package Service;
 import Model.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IProductService {
     void addProduct(Product product);
     void showAllProducts();
     void updateProduct(Product product);
-    ArrayList<Product> showProductbyBrand(String brand);
+    List<Product> showProductbyBrand(String brand);
     void deleteProduct(int id);
-    ArrayList<Product> showProductbyPrice(double price);
-    ArrayList<Product> showProductbystock(int stock);
+    List<Product> showProductbyPrice(double price);
+    List<Product> showProductbystock(int stock);
 }
