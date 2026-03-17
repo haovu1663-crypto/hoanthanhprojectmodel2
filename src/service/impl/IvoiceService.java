@@ -1,9 +1,9 @@
-package Service.impl;
+package service.impl;
 
-import Dao.IinvoiceDao;
-import Dao.impl.IvoiceDao;
-import Model.Invoice;
-import Service.InvoiceService;
+import dao.IinvoiceDao;
+import dao.impl.IvoiceDao;
+import model.Invoice;
+import service.InvoiceService;
 
 import java.time.LocalDate;
 

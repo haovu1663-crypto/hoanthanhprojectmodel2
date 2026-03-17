@@ -1,8 +1,8 @@
-package Service.impl;
+package service.impl;
 
-import Dao.impl.AdminDao;
-import Model.Admin;
-import Service.IadminService;
+import dao.impl.AdminDao;
+import model.Admin;
+import service.IadminService;
 
 public class AdminService implements IadminService {
     private static final AdminDao adminDao = new AdminDao();

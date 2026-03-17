@@ -1,6 +1,6 @@
-package Dao;
+package dao;
 
-import Model.Customer;
+import model.Customer;
 
 public interface ICustomerDao {
     void addCustomer(Customer customer);

@@ -1,6 +1,4 @@
-import Dao.IinvoiceDao;
-import Dao.impl.IvoiceDao;
-import Service.impl.AdminService;
+import dao.impl.IvoiceDao;
 import presentation.*;
 
 import java.util.Scanner;

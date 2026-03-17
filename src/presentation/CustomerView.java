@@ -1,10 +1,10 @@
 package presentation;
 
-import Dao.ICustomerDao;
-import Dao.impl.CustomerDao;
-import Model.Customer;
-import Service.ICustomerService;
-import Service.impl.CustomerService;
+import dao.ICustomerDao;
+import dao.impl.CustomerDao;
+import model.Customer;
+import service.ICustomerService;
+import service.impl.CustomerService;
 import java.util.Scanner;
 
 public class CustomerView {
@@ -57,7 +57,7 @@ public class CustomerView {
         System.out.printf("| %-5d | %-20s | %-12s | %-26s | %-25s |\n", c.getId(), c.getName(), c.getPhone(), c.getEmail(), c.getAddress());
         System.out.println("=".repeat(106));
         System.out.print("\nNhập tên mới: ");
-        String name = scanner.nextLine();
+        String name = UserView.noEmptyString(scanner);
         System.out.print("Nhập số điện thoại mới: ");
         String phone =UserView.checkSDT(scanner);
         System.out.print("Nhập email mới: ");
@@ -72,7 +72,7 @@ public class CustomerView {
             }
         }
         System.out.print("Nhập địa chỉ mới: ");
-        String address = scanner.nextLine();
+        String address = UserView.noEmptyString(scanner);
         Customer updated = new Customer(id, name, phone, email, address);
         iCustomerService.updateCustomer(updated);
         System.out.println("=> Cập nhật khách hàng thành công!");
@@ -99,6 +99,7 @@ public class CustomerView {
         System.out.print("Bạn có muốn xóa không? (1 = yes / 0 = no): ");
         int confirm = UserView.checkNumeric(scanner);
         if (confirm == 1) {
+
             iCustomerService.deleteCustomer(id);
             System.out.println("=> Đã xóa khách hàng thành công!");
         } else {

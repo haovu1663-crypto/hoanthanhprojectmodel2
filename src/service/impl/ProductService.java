@@ -1,11 +1,10 @@
-package Service.impl;
+package service.impl;
 
-import Dao.IProductDao;
-import Dao.impl.ProductDao;
-import Model.Product;
-import Service.IProductService;
+import dao.IProductDao;
+import dao.impl.ProductDao;
+import model.Product;
+import service.IProductService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductService implements IProductService {

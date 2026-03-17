@@ -1,6 +1,6 @@
-package Service;
+package service;
 
-import Model.InvoiceDetail;
+import model.InvoiceDetail;
 
 public interface IInvoiceDetailService {
     void addInvoiceDetail(InvoiceDetail invoiceDetail);

@@ -1,6 +1,6 @@
-package Service;
+package service;
 
-import Model.Admin;
+import model.Admin;
 
 public interface IadminService {
     Admin loginAdmin(String username, String password);

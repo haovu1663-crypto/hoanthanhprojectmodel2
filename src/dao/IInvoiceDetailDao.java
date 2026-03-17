@@ -1,6 +1,6 @@
-package Dao;
+package dao;
 
-import Model.InvoiceDetail;
+import model.InvoiceDetail;
 
 public interface IInvoiceDetailDao {
     void addInvoiceDetail(InvoiceDetail invoiceDetail);

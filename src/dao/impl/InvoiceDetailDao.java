@@ -1,7 +1,7 @@
-package Dao.impl;
+package dao.impl;
 
-import Dao.IInvoiceDetailDao;
-import Model.InvoiceDetail;
+import dao.IInvoiceDetailDao;
+import model.InvoiceDetail;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

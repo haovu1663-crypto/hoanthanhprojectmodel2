@@ -1,10 +1,10 @@
 package presentation;
 
-import Dao.IAdminDao;
-import Dao.impl.AdminDao;
-import Model.Admin;
-import Service.IadminService;
-import Service.impl.AdminService;
+import dao.IAdminDao;
+import dao.impl.AdminDao;
+import model.Admin;
+import service.IadminService;
+import service.impl.AdminService;
 
 import java.util.Scanner;
 
@@ -15,9 +15,9 @@ public class Adminview {
     public static void login (Scanner scanner){
         System.out.println("==========Đăng nhập=========");
         System.out.print("Tài Khoản : ");
-        String username = scanner.nextLine();
+        String username = UserView.noEmptyString(scanner);
         System.out.print("Mật Khẩu : ");
-        String password = scanner.nextLine();
+        String password = UserView.noEmptyString(scanner);
         Admin a =iadminService.loginAdmin(username,password);
         if(a!=null){
             System.out.println("Đăng nhâp thành công ");
@@ -29,7 +29,7 @@ public class Adminview {
             login(scanner);
         }
     }
-    public static void addAdmin(Scanner scanner){
+    public static void addAdmin(Scanner scanner ){
         System.out.println("===============Đăng ký tài khoản===============");
         System.out.print("Nhập họ và tên : ");
         String name =  scanner.nextLine();

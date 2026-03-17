@@ -1,17 +1,19 @@
-package Dao.impl;
+package dao.impl;
 
-import Dao.IinvoiceDao;
-import Model.Customer;
-import Model.Invoice;
+import dao.IinvoiceDao;
+import model.Invoice;
 
 import java.sql.*;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.Locale;
 
 import static utils.DBUtil.getConnection;
 
 public class IvoiceDao implements IinvoiceDao {
+  private static NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+
     @Override
     public int addInvoice(Invoice invoice) {
         String sql = "INSERT INTO quanlysanpham.invoice (customer_id, total_amount) VALUES (?, 0) RETURNING id";
@@ -184,8 +186,8 @@ public class IvoiceDao implements IinvoiceDao {
                 LocalDate date = rs.getDate("order_date").toLocalDate();
                 String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
                 double total = rs.getDouble("daily_total");
-
-                System.out.printf("| %-15s | %-20.2f |\n", formattedDate, total);
+                String formattedPrice = currencyFormat.format(total);
+                System.out.printf("| %-15s | %-20s |\n", formattedDate, formattedPrice);
             }
             System.out.println("=".repeat(42));
 
@@ -214,8 +216,8 @@ public class IvoiceDao implements IinvoiceDao {
                 String month = rs.getString("month_period");
                 int count = rs.getInt("total_invoices");
                 double total = rs.getDouble("monthly_revenue");
-
-                System.out.printf("| %-15s | %-18d | %-20.2f |\n", month, count, total);
+                String formattedPrice = currencyFormat.format(total);
+                System.out.printf("| %-15s | %-18d | %-20s |\n", month, count, formattedPrice);
             }
             System.out.println("=".repeat(63));
 
@@ -242,8 +244,8 @@ public class IvoiceDao implements IinvoiceDao {
                 int year = rs.getInt("order_year");
                 int count = rs.getInt("total_invoices");
                 double total = rs.getDouble("yearly_revenue");
-
-                System.out.printf("| %-10d | %-15d | %-22.2f |\n", year, count, total);
+                String formattedPrice = currencyFormat.format(total);
+                System.out.printf("| %-10d | %-15d | %-22s |\n", year, count,formattedPrice);
             }
             System.out.println("=".repeat(57));
 

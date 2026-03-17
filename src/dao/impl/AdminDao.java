@@ -1,7 +1,7 @@
-package Dao.impl;
+package dao.impl;
 
-import Dao.IAdminDao;
-import Model.Admin;
+import dao.IAdminDao;
+import model.Admin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

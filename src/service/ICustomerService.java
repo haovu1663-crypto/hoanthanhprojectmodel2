@@ -1,6 +1,6 @@
-package Service;
+package service;
 
-import Model.Customer;
+import model.Customer;
 
 public interface ICustomerService {
     void addCustomer(Customer customer);

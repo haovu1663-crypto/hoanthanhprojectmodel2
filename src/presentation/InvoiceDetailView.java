@@ -1,12 +1,11 @@
 package presentation;
 
-import Dao.IProductDao;
-import Dao.impl.ProductDao;
-import Model.Customer;
-import Model.InvoiceDetail;
-import Model.Product;
-import Service.IInvoiceDetailService;
-import Service.impl.InvoiceDetailService;
+import dao.IProductDao;
+import dao.impl.ProductDao;
+import model.InvoiceDetail;
+import model.Product;
+import service.IInvoiceDetailService;
+import service.impl.InvoiceDetailService;
 
 import java.util.Scanner;
 

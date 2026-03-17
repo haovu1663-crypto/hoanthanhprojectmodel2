@@ -1,13 +1,11 @@
 package presentation;
 
-import Dao.IProductDao;
-import Dao.impl.ProductDao;
-import Model.Product;
-import Service.IProductService;
-import Service.impl.ProductService;
+import dao.IProductDao;
+import dao.impl.ProductDao;
+import model.Product;
+import service.IProductService;
+import service.impl.ProductService;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,20 +15,20 @@ public class ProductView {
     public static void addProduct(Scanner scanner) {
         System.out.println("========== Thêm Product==========");
         System.out.print("Nhâp name Product : ");
-        String name  = scanner.nextLine(); ;
+        String name  =UserView.noEmptyString(scanner); ;
         while(true){
 
             Product product = iProductDao.findProductByname(name);
             if(product!=null){
                 System.out.println("Name product này đã tồn tại vui lòng nhập lại.");
-                name=scanner.nextLine();
+                name=UserView.noEmptyString(scanner);
             }
             else {
               break;
             }
         }
         System.out.print("Nhập Brand : ");
-        String brand = scanner.nextLine();
+        String brand =UserView.noEmptyString(scanner);
         System.out.print("Nhập Price : ");
         double price = UserView.checkPrice(scanner);
         System.out.print("Nhập Stock : ");
@@ -65,19 +63,19 @@ public class ProductView {
                 p.getId(), p.getName(), p.getBrand(), p.getPrice(), p.getStock());
         System.out.println("=".repeat(86));
         System.out.print("\nNhập Name mới: ");
-        String name = scanner.nextLine();
+        String name =UserView.noEmptyString(scanner);
         while (true) {
             Product existingProduct = iProductDao.findProductByname(name);
             if (existingProduct != null && existingProduct.getId() != id) {
                 System.out.print("Tên sản phẩm này đã tồn tại! Nhập lại: ");
-                name = scanner.nextLine();
+                name = UserView.noEmptyString(scanner);
             } else {
                 break;
             }
         }
 
         System.out.print("Nhập Brand mới: ");
-        String brand = scanner.nextLine();
+        String brand = UserView.noEmptyString(scanner);
 
         System.out.print("Nhập Price mới: ");
         double price = UserView.checkPrice(scanner);

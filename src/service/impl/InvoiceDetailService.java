@@ -1,9 +1,9 @@
-package Service.impl;
+package service.impl;
 
-import Dao.IInvoiceDetailDao;
-import Dao.impl.InvoiceDetailDao;
-import Model.InvoiceDetail;
-import Service.IInvoiceDetailService;
+import dao.IInvoiceDetailDao;
+import dao.impl.InvoiceDetailDao;
+import model.InvoiceDetail;
+import service.IInvoiceDetailService;
 
 public class InvoiceDetailService implements IInvoiceDetailService {
     IInvoiceDetailDao invoiceDetailDao = new InvoiceDetailDao();

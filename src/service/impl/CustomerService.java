@@ -1,9 +1,9 @@
-package Service.impl;
+package service.impl;
 
-import Dao.ICustomerDao;
-import Dao.impl.CustomerDao;
-import Model.Customer;
-import Service.ICustomerService;
+import dao.ICustomerDao;
+import dao.impl.CustomerDao;
+import model.Customer;
+import service.ICustomerService;
 
 public class CustomerService implements ICustomerService {
     ICustomerDao customerDao = new CustomerDao();

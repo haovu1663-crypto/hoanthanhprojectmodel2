@@ -1,15 +1,12 @@
-package Dao;
+package service;
 
-import Model.Invoice;
+import model.Invoice;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
-public interface IinvoiceDao {
+public interface InvoiceService {
     int addInvoice(Invoice invoice);
     void showAllInvoices();
-    void findbynam(String name );
+    void findbyname(String name);
     void findbydate(LocalDate date );
-
-
 }

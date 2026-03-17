@@ -1,12 +1,11 @@
 package presentation;
 
-import Dao.ICustomerDao;
-import Dao.impl.CustomerDao;
-import Model.Customer;
-import Model.Invoice;
-import Model.Product;
-import Service.InvoiceService;
-import Service.impl.IvoiceService;
+import dao.ICustomerDao;
+import dao.impl.CustomerDao;
+import model.Customer;
+import model.Invoice;
+import service.InvoiceService;
+import service.impl.IvoiceService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

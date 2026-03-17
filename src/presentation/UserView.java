@@ -150,4 +150,16 @@ public class UserView {
             }
         }
     }
+    public static String noEmptyString(Scanner scanner) {
+        String input;
+        while (true) {
+            input = scanner.nextLine().trim();
+            if (!input.isEmpty()) {
+                return input;
+            }
+            System.out.println(RED+"Chuỗi không được để trống, vui lòng nhập lại!"+RESET);
+        }
+    }
+
+
 }

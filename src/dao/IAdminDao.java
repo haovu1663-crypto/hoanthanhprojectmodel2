@@ -1,6 +1,6 @@
-package Dao;
+package dao;
 
-import Model.Admin;
+import model.Admin;
 
 public interface IAdminDao {
    Admin findAdminByUsername(String name);
