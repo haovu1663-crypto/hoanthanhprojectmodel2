@@ -37,13 +37,13 @@ public class InvioceView {
     public static void findbyname(Scanner scanner) {
         System.out.println("==========Tìm kiếm hóa đơn theo Customer name =========");
         System.out.println("nhập name : ");
-        String name = scanner.nextLine();
+        String name =UserView.noEmptyString(scanner);
         invoiceService.findbyname(name);
     }
     public static void findbydate(Scanner scanner) {
         System.out.println("==========Tìm kiếm hóa đơn theo Create_at =========");
         System.out.println("nhập create_at : (yyyy/MM/dd) ");
-        String input = scanner.nextLine();
+        String input = UserView.noEmptyString(scanner);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate date = LocalDate.parse(input, formatter);
         invoiceService.findbydate(date);

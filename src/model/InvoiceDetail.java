@@ -7,6 +7,10 @@ public class InvoiceDetail {
     private int quantity;
     private double unitPrice;
 
+    public InvoiceDetail(int id) {
+        this.id = id;
+    }
+
     public InvoiceDetail(int id, int invoiceId, int productId, int quantity, double unitPrice) {
         this.id = id;
         this.invoiceId = invoiceId;

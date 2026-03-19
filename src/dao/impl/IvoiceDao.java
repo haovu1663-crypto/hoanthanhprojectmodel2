@@ -2,17 +2,20 @@ package dao.impl;
 
 import dao.IinvoiceDao;
 import model.Invoice;
+import model.Product;
 
 import java.sql.*;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import static utils.DBUtil.getConnection;
 
 public class IvoiceDao implements IinvoiceDao {
-  private static NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+public static NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
     @Override
     public int addInvoice(Invoice invoice) {
@@ -252,5 +255,29 @@ public class IvoiceDao implements IinvoiceDao {
         } catch (SQLException e) {
             System.err.println("Lỗi khi thống kê theo năm: " + e.getMessage());
         }
+    }
+    public static List<Invoice> findInvoicebyidProdusct(int id_in) {
+        List<Invoice> invoices = new ArrayList<>();
+        String sql = "SELECT * FROM quanlysanpham.invoice WHERE customer_id=?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id_in);
+
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    Invoice invoice = new Invoice(id);
+                    invoices.add(invoice);
+                }
+
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi đọc dữ liệu: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return invoices;
     }
 }

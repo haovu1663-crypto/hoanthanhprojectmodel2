@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static dao.impl.IvoiceDao.currencyFormat;
 import static utils.DBUtil.getConnection;
 
 public class ProductDao implements IProductDao {
@@ -76,9 +77,10 @@ public class ProductDao implements IProductDao {
                 String name = rs.getString(2);
                 String brand = rs.getString(3);
                 double price = rs.getDouble(4);
+                String formattedPrice = currencyFormat.format(price);
                 int stock = rs.getInt(5);
-                System.out.printf("| %-5d | %-25s | %-15s | %-15.2f | %-10d |\n",
-                        id, name, brand, price, stock);
+                System.out.printf("| %-5d | %-25s | %-15s | %-15s | %-10d |\n",
+                        id, name, brand, formattedPrice, stock);
             }
 
             System.out.println("=".repeat(86));
@@ -264,5 +266,4 @@ public class ProductDao implements IProductDao {
             throw new RuntimeException(e);
         }
     }
-
 }

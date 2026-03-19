@@ -1,8 +1,11 @@
 package service.impl;
 
 import dao.IProductDao;
+import dao.impl.InvoiceDetailDao;
 import dao.impl.ProductDao;
+import model.InvoiceDetail;
 import model.Product;
+import presentation.UserView;
 import service.IProductService;
 
 import java.util.List;
@@ -32,7 +35,15 @@ public class ProductService implements IProductService {
 
     @Override
     public void deleteProduct(int id) {
-        productDao.deleteProduct(id);
+       List<InvoiceDetail> i  = InvoiceDetailDao.findInvoiceDetailbyidProdusct(id);
+       if(i!=null){
+           System.out.println(UserView.RED+"sản phẩm này đã được bán ra không thể xóa "+UserView.RESET);
+       }
+       else{
+           productDao.deleteProduct(id);
+           System.out.println("=> Đã xóa sản phẩm thành công!");
+       }
+
     }
 
     @Override

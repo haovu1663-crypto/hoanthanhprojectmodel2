@@ -13,7 +13,7 @@ public class CustomerView {
     public static void addCustomer(Scanner scanner) {
         System.out.println("========== Thêm Khách Hàng ==========");
         System.out.print("Nhập tên khách hàng: ");
-        String name = scanner.nextLine();
+        String name = UserView.noEmptyString(scanner);
         System.out.print("Nhập số điện thoại: ");
         String phone = UserView.checkSDT(scanner);
         // Kiểm tra email
@@ -29,7 +29,7 @@ public class CustomerView {
             }
         }
         System.out.print("Nhập địa chỉ: ");
-        String address = scanner.nextLine();
+        String address = UserView.noEmptyString(scanner);
         Customer c = new Customer(name, phone, email, address);
         iCustomerService.addCustomer(c);
     }
@@ -101,7 +101,6 @@ public class CustomerView {
         if (confirm == 1) {
 
             iCustomerService.deleteCustomer(id);
-            System.out.println("=> Đã xóa khách hàng thành công!");
         } else {
             System.out.println("=> Đã hủy thao tác xóa.");
         }

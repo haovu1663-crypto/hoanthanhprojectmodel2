@@ -8,6 +8,7 @@ public class Invoice {
     private LocalDateTime createdAt;
     private double totalAmount;
 
+
     public Invoice(int id, int customerId, LocalDateTime createdAt, double totalAmount) {
         this.id = id;
         this.customerId = customerId;

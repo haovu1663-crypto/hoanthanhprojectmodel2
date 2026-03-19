@@ -9,6 +9,8 @@ import service.impl.ProductService;
 import java.util.List;
 import java.util.Scanner;
 
+import static dao.impl.IvoiceDao.currencyFormat;
+
 public class ProductView {
    private static IProductService iProductService=new ProductService();
    private static IProductDao iProductDao=new ProductDao();
@@ -59,8 +61,9 @@ public class ProductView {
         System.out.printf("| %-5s | %-25s | %-15s | %-15s | %-10s |\n",
                 "ID", "Name", "Brand", "Price", "Stock");
         System.out.println("-".repeat(86));
-        System.out.printf("| %-5d | %-25s | %-15s | %-15.2f | %-10d |\n",
-                p.getId(), p.getName(), p.getBrand(), p.getPrice(), p.getStock());
+        String formattedPrice = currencyFormat.format(p.getPrice());
+        System.out.printf("| %-5d | %-25s | %-15s | %-15s | %-10d |\n",
+                p.getId(), p.getName(), p.getBrand(), formattedPrice, p.getStock());
         System.out.println("=".repeat(86));
         System.out.print("\nNhập Name mới: ");
         String name =UserView.noEmptyString(scanner);
@@ -101,8 +104,9 @@ public class ProductView {
                     "ID", "Name", "Brand", "Price", "Stock");
             System.out.println("-".repeat(86));
             for (Product p : products) {
-                System.out.printf("| %-5d | %-25s | %-15s | %-15.2f | %-10d |\n",
-                        p.getId(), p.getName(), p.getBrand(), p.getPrice(), p.getStock());
+                String formattedPrice = currencyFormat.format(p.getPrice());
+                System.out.printf("| %-5d | %-25s | %-15s | %-15s | %-10d |\n",
+                        p.getId(), p.getName(), p.getBrand(),formattedPrice, p.getStock());
             }
 
             System.out.println("=".repeat(86));
@@ -129,15 +133,16 @@ public class ProductView {
         System.out.printf("| %-5s | %-25s | %-15s | %-15s | %-10s |\n",
                 "ID", "Name", "Brand", "Price", "Stock");
         System.out.println("-".repeat(86));
-        System.out.printf("| %-5d | %-25s | %-15s | %-15.2f | %-10d |\n",
-                p.getId(), p.getName(), p.getBrand(), p.getPrice(), p.getStock());
+        String formattedPrice = currencyFormat.format(p.getPrice());
+        System.out.printf("| %-5d | %-25s | %-15s | %-15s | %-10d |\n",
+                p.getId(), p.getName(), p.getBrand(),formattedPrice, p.getStock());
         System.out.println("=".repeat(86));
         System.out.print("Bạn có chắc chắn muốn xóa không? (1 = Yes / 0 = No): ");
         try {
             int confirm = Integer.parseInt(scanner.nextLine());
             if (confirm == 1) {
                 iProductService.deleteProduct(id);
-                System.out.println("=> Đã xóa sản phẩm thành công!");
+
             } else {
                 System.out.println("=> Đã hủy thao tác xóa.");
             }
@@ -156,8 +161,9 @@ public class ProductView {
                     "ID", "Name", "Brand", "Price", "Stock");
             System.out.println("-".repeat(86));
             for (Product p : products) {
-                System.out.printf("| %-5d | %-25s | %-15s | %-15.2f | %-10d |\n",
-                        p.getId(), p.getName(), p.getBrand(), p.getPrice(), p.getStock());
+                String formattedPrice = currencyFormat.format(p.getPrice());
+                System.out.printf("| %-5d | %-25s | %-15s | %-15s | %-10d |\n",
+                        p.getId(), p.getName(), p.getBrand(),formattedPrice, p.getStock());
             }
 
             System.out.println("=".repeat(86));
@@ -176,8 +182,9 @@ public class ProductView {
                     "ID", "Name", "Brand", "Price", "Stock");
             System.out.println("-".repeat(86));
             for (Product p : products) {
-                System.out.printf("| %-5d | %-25s | %-15s | %-15.2f | %-10d |\n",
-                        p.getId(), p.getName(), p.getBrand(), p.getPrice(), p.getStock());
+                String formattedPrice = currencyFormat.format(p.getPrice());
+                System.out.printf("| %-5d | %-25s | %-15s | %-15s | %-10d |\n",
+                        p.getId(), p.getName(), p.getBrand(), formattedPrice, p.getStock());
             }
             System.out.println("=".repeat(86));
         } else {
